@@ -40,6 +40,8 @@ src/
 
 ## Getting Started
 
+### Local Development
+
 1. Install dependencies:
 ```bash
 npm install
@@ -53,6 +55,39 @@ npm run dev
 3. Build for production:
 ```bash
 npm run build
+```
+
+### Docker Development
+
+1. Start the development container:
+```bash
+docker-compose up app
+```
+
+The app will be available at `http://localhost:5173`
+
+2. Stop the container:
+```bash
+docker-compose down
+```
+
+### Docker Production
+
+1. Build and start the production container:
+```bash
+docker-compose up app-prod
+```
+
+The app will be available at `http://localhost:8080`
+
+2. Build only (without starting):
+```bash
+docker-compose build app-prod
+```
+
+3. Stop the container:
+```bash
+docker-compose down
 ```
 
 ## Usage

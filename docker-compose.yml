@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
-      container_name: stockbot-ui
+    container_name: stockbot-ui
     ports:
       - "5173:5173"
     volumes:

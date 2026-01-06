@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getWatchLists, addSymbol, removeSymbol } from '../services/api';
 import AddSymbolModal from '../components/AddSymbolModal';
+import StockCard from '../components/StockCard';
 import './WatchListsPage.css';
 
 const WatchListsPage = () => {
@@ -100,20 +101,12 @@ const WatchListsPage = () => {
             ) : (
               <div className="stocks-grid">
                 {stocks.map((stock) => (
-                  <div key={stock.id} className="stock-card">
-                    <div className="stock-card-header">
-                      <div className="stock-id">ID: {stock.id}</div>
-                      <button
-                        onClick={() => handleRemoveSymbol(stock.id)}
-                        className="remove-button"
-                        disabled={removingId === stock.id}
-                        title="Remove symbol"
-                      >
-                        {removingId === stock.id ? '...' : '−'}
-                      </button>
-                    </div>
-                    <div className="stock-name">{stock.name}</div>
-                  </div>
+                  <StockCard
+                    key={stock.id}
+                    stock={stock}
+                    removingId={removingId}
+                    onRemove={handleRemoveSymbol}
+                  />
                 ))}
               </div>
             )}

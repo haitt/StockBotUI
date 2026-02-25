@@ -13,7 +13,7 @@ const StockCard = ({ stock, removingId, onRemove }) => {
     if (stock.is_low_price === 1) {
       labels.push({ text: 'Giá thấp', color: '#f1c40f' });
     }
-    if (stock.percentage_of_change && stock.percentage_of_change !== 0) {
+    if (stock.percentage_of_change && stock.percentage_of_change !== 0 && stock.percentage_of_change !== '0') {
       labels.push({ 
         text: `Giá thấp hơn ${stock.percentage_of_change}% TB năm`, 
         color: '#f39c12' 

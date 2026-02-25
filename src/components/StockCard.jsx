@@ -11,31 +11,31 @@ const StockCard = ({ stock, removingId, onRemove }) => {
     const labels = [];
     
     if (stock.is_low_price === 1) {
-      labels.push({ text: 'Giá thấp', color: '#ff6b6b' });
+      labels.push({ text: 'Giá thấp', color: '#f1c40f' });
     }
-    if (stock.is_not_change_much_price === 1) {
-      labels.push({ text: 'Giá ít dao động', color: '#f9ca24' });
-    }
-    if (stock.is_low_volume === 1) {
-      labels.push({ text: 'Thanh khoản thấp', color: '#4ecdc4' });
-    }
-    if (stock.is_very_low_volume === 1) {
-      labels.push({ text: 'Thanh khoản rất thấp', color: '#45b7d1' });
-    }
-    if (stock.is_increase_low_volume === 1) {
-      labels.push({ text: 'Thanh khoản thấp dần', color: '#6c5ce7' });
-    }
-    if (stock.is_very_very_low_volume === 1) {
-      labels.push({ text: 'Thanh khoản cạn kiệt', color: '#d63031' });
-    }
-    if (stock.percentage_of_change) {
+    if (stock.percentage_of_change && stock.percentage_of_change !== 0) {
       labels.push({ 
         text: `Giá thấp hơn ${stock.percentage_of_change}% TB năm`, 
-        color: '#e17055' 
+        color: '#f39c12' 
       });
     }
+    if (stock.is_not_change_much_price === 1) {
+      labels.push({ text: 'Giá ít dao động', color: '#e67e22' });
+    }
     if (stock.is_not_change_much_close_price === 1) {
-      labels.push({ text: 'Giá đi ngang', color: '#b2bec3' });
+      labels.push({ text: 'Giá đi ngang', color: '#d35400' });
+    }
+    if (stock.is_low_volume === 1) {
+      labels.push({ text: 'Thanh khoản thấp', color: '#1abc9c' });
+    }
+    if (stock.is_increase_low_volume === 1) {
+      labels.push({ text: 'Thanh khoản thấp dần', color: '#16a085' });
+    }
+    if (stock.is_very_low_volume === 1) {
+      labels.push({ text: 'Thanh khoản rất thấp', color: '#3498db' });
+    }
+    if (stock.is_very_very_low_volume === 1) {
+      labels.push({ text: 'Thanh khoản cạn kiệt', color: '#2980b9' });
     }
     
     return labels;

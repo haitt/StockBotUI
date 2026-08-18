@@ -1,5 +1,6 @@
 import React from 'react'
 import { createContext, useContext, useState, useEffect } from 'react';
+import { login as loginRequest, UNAUTHORIZED_EVENT } from '../services/api';
 
 const AuthContext = createContext(null);
 
@@ -14,6 +15,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [sessionExpired, setSessionExpired] = useState(false);
 
   useEffect(() => {
     // Check if user is already logged in (token in localStorage)
@@ -26,29 +28,31 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    // api.js đã xoá token trước khi phát event; ở đây chỉ hạ trạng thái để router
+    // đưa người dùng về trang login.
+    const handleUnauthorized = () => {
+      setUser(null);
+      setSessionExpired(true);
+    };
+
+    window.addEventListener(UNAUTHORIZED_EVENT, handleUnauthorized);
+    return () => window.removeEventListener(UNAUTHORIZED_EVENT, handleUnauthorized);
+  }, []);
+
   const login = async (username, password) => {
     try {
-      const response = await fetch('https://stockapi.harico.io.vn/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+      const data = await loginRequest(username, password);
+      const token = data?.token;
 
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-      const data = await response.json();
-      const token = data.data.token;
-
-      if (token) {
-        localStorage.setItem('token', token);
-        setUser({ token });
-        return { success: true };
-      } else {
+      if (!token) {
         throw new Error('No token received');
       }
+
+      localStorage.setItem('token', token);
+      setUser({ token });
+      setSessionExpired(false);
+      return { success: true };
     } catch (error) {
       return { success: false, error: error.message };
     }
@@ -57,6 +61,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     setUser(null);
+    setSessionExpired(false);
   };
 
   const value = {
@@ -64,6 +69,7 @@ export const AuthProvider = ({ children }) => {
     login,
     logout,
     loading,
+    sessionExpired,
     isAuthenticated: !!user,
   };
 

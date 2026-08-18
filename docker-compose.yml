@@ -20,7 +20,7 @@ services:
 
 networks:
   shared:
-    external: true
+    external: false
 
   # app-prod:
   #   build:

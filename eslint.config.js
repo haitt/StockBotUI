@@ -24,6 +24,9 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Context file xuất cả Provider (component) và hook; hook không phải component
+      // nên rule mặc định báo lỗi. Cho phép đúng tên `useAuth`.
+      'react-refresh/only-export-components': ['error', { allowExportNames: ['useAuth'] }],
     },
   },
 ])

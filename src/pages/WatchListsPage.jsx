@@ -25,8 +25,7 @@ const WatchListsPage = () => {
       setLoading(true);
       setError('');
       const data = await getWatchLists();
-      console.log(data);
-      setStocks(data);
+      setStocks(data || []);
     } catch (err) {
       setError(err.message || 'Failed to load watch lists');
     } finally {

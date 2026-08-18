@@ -12,6 +12,10 @@ RUN npm ci
 # Copy source code
 COPY . .
 
+# Biến VITE_* bị nhúng vào bundle lúc build. Không truyền --build-arg thì ARG này unset
+# và Vite đọc .env.production; đừng thêm ENV vì giá trị rỗng sẽ đè mất file env.
+ARG VITE_API_URL
+
 # Build the app
 RUN npm run build
 

@@ -2,10 +2,11 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { SESSION_EXPIRED_MESSAGE } from '../services/api';
 import './WelcomePage.css';
 
 const WelcomePage = () => {
-  const { login } = useAuth();
+  const { login, sessionExpired } = useAuth();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -32,6 +33,10 @@ const WelcomePage = () => {
       <div className="welcome-card">
         <h1>Welcome to StockBot</h1>
         <p>Please login to access your watch lists</p>
+
+        {sessionExpired && !error && (
+          <div className="error-message">{SESSION_EXPIRED_MESSAGE}</div>
+        )}
         
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">

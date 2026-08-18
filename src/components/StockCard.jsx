@@ -37,6 +37,18 @@ const StockCard = ({ stock, removingId, onRemove }) => {
     if (stock.is_very_very_low_volume === 1) {
       labels.push({ text: 'Thanh khoản cạn kiệt', color: '#2980b9' });
     }
+    if (stock.bb_squeeze === 1) {
+      labels.push({ text: 'BB Squeeze', color: '#9b59b6' });
+    }
+    if (stock.bb_lower_touch === 1) {
+      labels.push({ text: 'BB Chạm dải dưới', color: '#27ae60' });
+    }
+    if (stock.bb_upper_breakout === 1) {
+      labels.push({ text: 'BB Bứt phá', color: '#e74c3c' });
+    }
+    if (stock.bb_midline_recovery === 1) {
+      labels.push({ text: 'BB Hồi về giữa', color: '#2ecc71' });
+    }
     
     return labels;
   };
